@@ -1,0 +1,77 @@
+body {
+	background: #1574c3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 95vh;
+	font-family: montserrat;
+}
+/* Form Container */
+
+#wrapper {
+	width: 500px;
+	height: 370px;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.4);
+}
+#wrapper h1 {
+	color: #1574c3;
+}
+/* Form */
+
+.form {
+	width: 500px;
+	height: 370px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: transform 0.6s ease-in-out;
+	text-align: center;
+}
+.form input {
+	width: 80%;
+	height: 35px;
+	margin-bottom: 15px;
+	padding: 0 0 0 15px;
+}
+/* Login Form */
+
+#login-side {
+	background-color: #f7f7f7;
+	transform: translateX(0);
+}
+/* Sign Up Form */
+
+#signup-side {
+	background-color: #ffffff;
+	transform: translateX(-100%);
+}
+/* Form Switch */
+
+.switch-animation {
+	margin-top: 20px;
+	text-align: center;
+}
+.switch-animation a {
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.2s;
+}
+.switch-animation a:hover {
+	color: #6ab5b9;
+}
+button {
+	display: block;
+	margin: 2% auto 0;
+	border: none;
+	background: #1574c3;
+	padding: 10px 175px;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 18px;
+	border-radius: 5px;
+	font-family: montserrat;
+	font-weight: 700;
+}
