@@ -13,9 +13,12 @@ export class ProjectsComponent implements OnInit {
 
   constructor(private projectService: ProjectService) {}
 
+  // src/app/com/projects/projects.component.ts
   ngOnInit(): void {
     this.projectService.getProjects().subscribe(
-      (data) => (this.projects = data),
+      (data) => {
+        this.projects = data.sort((a, b) => a.name.localeCompare(b.name));
+      },
       (error) => console.error('Error fetching projects', error)
     );
   }

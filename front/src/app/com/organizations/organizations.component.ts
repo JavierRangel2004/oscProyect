@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from '../../services/organization.service';
 import { Organization } from '../../models/organization';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-organizations',
@@ -13,10 +14,22 @@ export class OrganizationsComponent implements OnInit {
 
   constructor(private organizationService: OrganizationService) {}
 
-  ngOnInit(): void {
-    this.organizationService.getOrganizations().subscribe(
-      (data) => (this.organizations = data),
-      (error) => console.error('Error fetching organizations', error)
-    );
+// src/app/com/organizations/organizations.component.ts
+ngOnInit(): void {
+  this.organizationService.getOrganizations().subscribe(
+    (data) => {
+      this.organizations = data.sort((a, b) => a.name.localeCompare(b.name));
+    },
+    (error) => console.error('Error fetching organizations', error)
+  );
+}
+
+
+  getLogoUrl(logoPath: string | null): string {
+    if (logoPath) {
+      return `${environment.mediaUrl}${logoPath}`;
+    } else {
+      return 'orgEX.jpg';
+    }
   }
 }

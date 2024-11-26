@@ -21,6 +21,7 @@ export class OrganizationDetailsComponent implements OnInit {
     private projectService: ProjectService
   ) {}
 
+  // src/app/com/organization-details/organization-details.component.ts
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.organizationService.getOrganization(id).subscribe(
@@ -35,4 +36,5 @@ export class OrganizationDetailsComponent implements OnInit {
       (error) => console.error('Error fetching organization', error)
     );
   }
+
 }

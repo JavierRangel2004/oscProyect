@@ -10,6 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class OrganizationSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
+    logo = serializers.ImageField(use_url=True)  # Ensure full URL is used
     
     class Meta:
         model = Organization

@@ -22,7 +22,9 @@ export class ProjectService {
     return this.http.get<Project>(`${this.apiUrl}${id}/`);
   }
 
+  // src/app/services/project.service.ts
   getProjectsByOrganization(organizationId: number): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.apiUrl}?organization=${organizationId}`);
   }
+
 }
