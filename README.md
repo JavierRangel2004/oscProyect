@@ -42,8 +42,8 @@ Ensure you have the following installed:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/redes-que-cambian.git
-   cd redes-que-cambian
+   git clone https://github.com/JavierRangel2004/oscProyect.git
+   cd oscProyect
    ```
 
 2. **Set Up Environment Variables**
