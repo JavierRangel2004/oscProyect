@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'organizations/:id', component: OrganizationDetailsComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'projects/:id', component: ProjectDetailsComponent },
-  { path: 'signin', component: SigninComponent },
+  { path: 'login', component: SigninComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'not-found' },
