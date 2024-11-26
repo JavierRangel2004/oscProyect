@@ -11,79 +11,104 @@
 </section>
 
 <!-- Causas Section -->
-<section class="services section-padding my-5" id="services">
+<section class="services section-padding py-5 bg-body-secondary" id="services">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="section-header text-center pb-5">
           <h2>Causas que se están apoyando</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur<br>
-          adipisicing elit. Non, quo.</p>
+          <p>Por el momento, recopilamos información de organizaciones que están ayudando a mejorar a México en las siguientes categorías: </p>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-12 col-md-12 col-lg-4">
-        <div class="card text-white text-center bg-dark pb-2">
+        <div class="card text-white text-center pb-2">
           <div class="card-body">
             <i class="fa-solid fa-book my-2"></i>
             <h3 class="card-title my-3">Best Quality</h3>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p><button class="btn bg-warning text-dark">Read More</button>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p>
+            
           </div>
         </div>
       </div>
       <div class="col-12 col-md-12 col-lg-4">
-        <div class="card text-white text-center bg-dark pb-2">
+        <div class="card text-white text-center pb-2">
           <div class="card-body">
             <i class="fa-solid fa-handshake-angle my-2"></i>
             <h3 class="card-title my-3">Sustainability</h3>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p><button class="btn bg-warning text-dark">Read More</button>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p>
+            
           </div>
         </div>
       </div>
       <div class="col-12 col-md-12 col-lg-4">
-        <div class="card text-white text-center bg-dark pb-2">
+        <div class="card text-white text-center pb-2">
           <div class="card-body">
             <i class="fa-solid fa-house my-2"></i>
             <h3 class="card-title my-3">Integrity</h3>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p><button class="btn bg-warning text-dark">Read More</button>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p>
+            
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- services section Ends -->
-  <!-- Causas Section -->
-  <!-- <section class="causes-section container my-5">
-    <h2 class="text-center mb-4">Causas que se están apoyando</h2>
+
+<!-- Forma parte de Redes que Cambian Section -->
+<section class="join-us section-padding py-5" id="join-us">
+  <div class="container">
     <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 animate__animated animate__fadeInDown">
-          <img src="orgEX.jpg" class="card-img-top" alt="imagenEjemplo">
-          <div class="card-body">
-            <h5 class="card-title">Titulo ejemplo</h5>
-            <p class="card-text">Descripcion ejemplo</p>
-          </div>
+      <div class="col-md-12">
+        <div class="section-header text-center pb-5">
+          <h2>Forma parte de Redes que Cambian</h2>
+          <p>Registra tu organización para que más personas puedan conocerla y apoyarla.</p>
         </div>
       </div>
     </div>
-  </section>
-   -->
-  <!-- Testimonios Carousel
-  <section class="testimonials-section bg-light py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Testimonios</h2>
-      <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active" >
-            <div class="text-center">
-              <p>"ejemplo testimonial"</p>
-              <h5>- autor testimonial</h5>
-            </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form>
+          <div class="mb-3">
+            <label for="orgName" class="form-label">Nombre de la Organización</label>
+            <input type="text" class="form-control" id="orgName" required>
           </div>
-        </div>
+          <div class="mb-3">
+            <label for="orgDescription" class="form-label">Descripción</label>
+            <textarea class="form-control" id="orgDescription" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="orgWebsite" class="form-label">Website</label>
+            <input type="url" class="form-control" id="orgWebsite">
+          </div>
+          <div class="mb-3">
+            <label for="orgLogo" class="form-label">Logo</label>
+            <input type="file" class="form-control" id="orgLogo" accept="image/*">
+          </div>
+          <div class="mb-3">
+            <label for="orgAddress" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="orgAddress" required>
+          </div>
+          <div class="mb-3">
+            <label for="orgCategory" class="form-label">Categoría</label>
+            <select class="form-select" id="orgCategory" required>
+              <option value="salud">Salud</option>
+              <option value="infancia">Infancia</option>
+              <option value="apoyo-social">Apoyo Social</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="orgSocials" class="form-label">Redes Sociales</label>
+            <input type="text" class="form-control" id="orgSocials" placeholder="Ingrese su cuenta de Facebook, Twitter, Instagram, etc.">
+          </div>
+          <div class="mb-3">
+            <label for="orgPhone" class="form-label">Número de Teléfono</label>
+            <input type="tel" class="form-control" id="orgPhone" required>
+          </div>
+          <button type="submit" class="btn btn-dark">Enviar solicitud</button>
+        </form>
       </div>
     </div>
-  </section>
-   -->
+  </div>
+</section>

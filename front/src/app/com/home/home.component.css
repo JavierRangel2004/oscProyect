@@ -14,6 +14,21 @@
     background-blend-mode: overlay;
   }
 
+  .services .card{
+    background: #2b4352;
+  }
   .services .card-body i {
     font-size: 50px;
+  }
+
+  button{
+    display: block;
+    margin: 2% auto 0;
+    border: none;
+    background: #2b4352;
+    padding: 10px 175px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 18px;
+    border-radius: 5px;
   }
