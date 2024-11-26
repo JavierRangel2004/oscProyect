@@ -17,6 +17,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
+      - ./data_import:/app/data_import
+      - ./data_export:/app/data_export
     ports:
       - "8000:8000"
     depends_on:

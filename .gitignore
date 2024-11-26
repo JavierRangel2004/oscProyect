@@ -161,6 +161,12 @@ cython_debug/
 /tmp
 /out-tsc
 /.angular
+/cache
+/deps
+/vite
+# @angular files and chunk files
+*.js
+*.js.map
 
 # Dependency directories
 /node_modules
