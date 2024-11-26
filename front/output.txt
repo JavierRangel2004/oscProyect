@@ -1,0 +1,1382 @@
+Here is the functional angular app that is lifting in the docker container correctly, lets add the conection to the django api fo it to populate the data with the organizations endpoint and projects endpoint:
+
+http://localhost:8000/organizations/organizations/
+[
+  {
+    "id": 1,
+    "name": "Estancia Infantil Vasco de Quiroga I.A.P",
+    "description": null,
+    "website": "",
+    "logo": null,
+    "address": "Ramón López Velarde # 7 colonia Lomas de Nuevo México",
+    "categories": [
+      {
+        "id": 2,
+        "name": "Infancia"
+      }
+    ],
+    "date_added": "2024-11-26T05:19:44.115252Z",
+    "is_active": true,
+    "social_media_1": "https://www.facebook.com/p/estancia-infantil-vasco-de-quiroga-iap-100064701769756/",
+    "social_media_2": "None",
+    "phone_number": "5552572088",
+    "email": "None"
+  },
+  {
+    "id": 2,
+    "name": "Fundacion Semilla Durango",
+    "description": null,
+    "website": "None",
+    "logo": null,
+    "address": "Avenida General Lázaro Cárdenas esquina con Mascareñas 507 sur, Durango, Mexico",
+    "categories": [
+      {
+        "id": 2,
+        "name": "Infancia"
+      }
+    ],
+    "date_added": "2024-11-26T05:19:44.120309Z",
+    "is_active": true,
+    "social_media_1": "https://www.facebook.com/fundacionsemilla.dgo",
+    "social_media_2": "\\r\\nfundacionsemilla.dgo",
+    "phone_number": "6188175359",
+    "email": "fundacionsemilla.dgo@gmail.com"
+  },
+
+http://localhost:8000/projects/projects
+
+[
+  {
+    "id": 1,
+    "organization": {
+      "id": 1,
+      "name": "Estancia Infantil Vasco de Quiroga I.A.P",
+      "description": null,
+      "website": "",
+      "logo": null,
+      "address": "Ramón López Velarde # 7 colonia Lomas de Nuevo México",
+      "categories": [
+        {
+          "id": 2,
+          "name": "Infancia"
+        }
+      ],
+      "date_added": "2024-11-26T05:19:44.115252Z",
+      "is_active": true,
+      "social_media_1": "https://www.facebook.com/p/estancia-infantil-vasco-de-quiroga-iap-100064701769756/",
+      "social_media_2": "None",
+      "phone_number": "5552572088",
+      "email": "None"
+    },
+    "name": "Estancia Infantil",
+    "description": "",
+    "objectives": "",
+    "achievements": "",
+    "participation_methods": "",
+    "images": [],
+    "categories": [],
+    "date_added": "2024-11-26T05:19:44.146804Z",
+    "is_active": true
+  },
+  {
+    "id": 2,
+    "organization": {
+      "id": 2,
+      "name": "Fundacion Semilla Durango",
+      "description": null,
+      "website": "None",
+      "logo": null,
+      "address": "Avenida General Lázaro Cárdenas esquina con Mascareñas 507 sur, Durango, Mexico",
+      "categories": [
+        {
+          "id": 2,
+          "name": "Infancia"
+        }
+      ],
+      "date_added": "2024-11-26T05:19:44.120309Z",
+      "is_active": true,
+      "social_media_1": "https://www.facebook.com/fundacionsemilla.dgo",
+      "social_media_2": "\\r\\nfundacionsemilla.dgo",
+      "phone_number": "6188175359",
+      "email": "fundacionsemilla.dgo@gmail.com"
+    },
+    "name": "Apoyo a niños indígenas",
+    "description": "",
+    "objectives": "",
+    "achievements": "",
+    "participation_methods": "",
+    "images": [],
+    "categories": [],
+    "date_added": "2024-11-26T05:19:44.149591Z",
+    "is_active": true
+  },
+
+File: ./angular.json
+--------------------------------------------------------------------------------
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "app-front": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/app-front",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "app-front:build:production"
+            },
+            "development": {
+              "buildTarget": "app-front:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}
+--------------------------------------------------------------------------------
+
+File: ./Dockerfile
+--------------------------------------------------------------------------------
+# front/Dockerfile
+
+# Usa una imagen base de Node.js
+FROM node:18-alpine
+
+# Establece el directorio de trabajo
+WORKDIR /usr/src/app
+
+# Copia los archivos de dependencias
+COPY package.json package-lock.json ./
+
+# Instala Angular CLI globalmente y luego las dependencias del proyecto
+RUN npm install -g @angular/cli@latest && npm install
+
+# Copia el resto del código de la aplicación
+COPY . .
+
+# Exponer el puerto que usará Angular
+EXPOSE 4200
+
+# Comando para iniciar el servidor de desarrollo de Angular
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]
+--------------------------------------------------------------------------------
+
+File: ./fileOutput.py
+--------------------------------------------------------------------------------
+import os
+
+def scan_directory(root_dir, dir_blacklist=None, file_blacklist=None, output_file="output.txt"):
+    """
+    Scans the directory recursively and prints and saves the complete content of each file, 
+    while ignoring specified directories and files.
+
+    Args:
+        root_dir (str): The root directory to start scanning.
+        dir_blacklist (list): List of directory names to ignore.
+        file_blacklist (list): List of file names to ignore.
+        output_file (str): Path to the file where output will be saved.
+    """
+    dir_blacklist = dir_blacklist or []
+    file_blacklist = file_blacklist or []
+
+    # Open the output file for writing
+    with open(output_file, 'w', encoding='utf-8') as out_file:
+        for root, dirs, files in os.walk(root_dir):
+            # Filter out directories in the blacklist
+            dirs[:] = [d for d in dirs if d not in dir_blacklist]
+
+            for file_name in files:
+                # Skip files in the file blacklist
+                if file_name in file_blacklist:
+                    continue
+
+                file_path = os.path.join(root, file_name)
+
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        # Write and print file information
+                        out_file.write(f"File: {file_path}\n")
+                        out_file.write("-" * 80 + "\n")
+                        print(f"File: {file_path}")
+                        print("-" * 80)
+                        
+                        # Read and save the complete file content
+                        for line in file:
+                            out_file.write(line)
+                            print(line.rstrip())
+                        
+                        out_file.write("-" * 80 + "\n\n")
+                        print("-" * 80 + "\n")
+                except Exception as e:
+                    error_message = f"Error reading {file_path}: {e}\n"
+                    out_file.write(error_message)
+                    print(error_message)
+
+if __name__ == "__main__":
+    # Specify the root directory, directory blacklist, and file blacklist
+    root_directory = "./"  # Change to the desired root directory
+    directories_to_ignore = ["__pycache__", ".git", "node_modules","migrations","data_import","organizations","cache"]  # Add directory names to ignore
+    files_to_ignore = ["README.md", "LICENSE","output.txt",".env",".gitignore","package-lock.json","test.py","__init__.py"]  # Add file names to ignore
+
+    # Specify the output file
+    output_file_path = "output.txt"
+
+    scan_directory(root_directory, dir_blacklist=directories_to_ignore, file_blacklist=files_to_ignore, output_file=output_file_path)
+--------------------------------------------------------------------------------
+
+File: ./package.json
+--------------------------------------------------------------------------------
+{
+  "name": "app-front",
+  "version": "0.0.0",
+  "scripts": {
+  "start": "ng serve --host 0.0.0.0 --poll 2000",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^18.2.0",
+    "@angular/common": "^18.2.0",
+    "@angular/compiler": "^18.2.0",
+    "@angular/core": "^18.2.0",
+    "@angular/forms": "^18.2.0",
+    "@angular/platform-browser": "^18.2.0",
+    "@angular/platform-browser-dynamic": "^18.2.0",
+    "@angular/router": "^18.2.0",
+    "animate.css": "^4.1.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.10"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.2.7",
+    "@angular/cli": "^18.2.7",
+    "@angular/compiler-cli": "^18.2.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.2.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.5.2"
+  }
+}
+--------------------------------------------------------------------------------
+
+File: ./tsconfig.app.json
+--------------------------------------------------------------------------------
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "src/main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}
+--------------------------------------------------------------------------------
+
+File: ./tsconfig.json
+--------------------------------------------------------------------------------
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
+--------------------------------------------------------------------------------
+
+File: ./tsconfig.spec.json
+--------------------------------------------------------------------------------
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"
+    ]
+  },
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
+--------------------------------------------------------------------------------
+
+File: ./public\Designer.png
+--------------------------------------------------------------------------------
+Error reading ./public\Designer.png: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+File: ./public\favicon.ico
+--------------------------------------------------------------------------------
+Error reading ./public\favicon.ico: 'utf-8' codec can't decode byte 0xa8 in position 14: invalid start byte
+File: ./public\hero.jpg
+--------------------------------------------------------------------------------
+Error reading ./public\hero.jpg: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+File: ./public\orgEX.jpg
+--------------------------------------------------------------------------------
+Error reading ./public\orgEX.jpg: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+File: ./public\Poppins-Regular.ttf
+--------------------------------------------------------------------------------
+Error reading ./public\Poppins-Regular.ttf: 'utf-8' codec can't decode byte 0x80 in position 7: invalid start byte
+File: ./src\index.html
+--------------------------------------------------------------------------------
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ComunicacionOSC</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="Designer.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+</head>
+<body>
+  <app-root></app-root>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</body>
+</html>
+--------------------------------------------------------------------------------
+
+File: ./src\main.ts
+--------------------------------------------------------------------------------
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule, {
+  ngZoneEventCoalescing: true
+})
+  .catch(err => console.error(err));
+--------------------------------------------------------------------------------
+
+File: ./src\styles.css
+--------------------------------------------------------------------------------
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+.poppins-thin {
+    font-family: "Poppins", serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  .poppins-extralight {
+    font-family: "Poppins", serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .poppins-light {
+    font-family: "Poppins", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .poppins-regular {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .poppins-medium {
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .poppins-semibold {
+    font-family: "Poppins", serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .poppins-bold {
+    font-family: "Poppins", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .poppins-extrabold {
+    font-family: "Poppins", serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .poppins-black {
+    font-family: "Poppins", serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .poppins-thin-italic {
+    font-family: "Poppins", serif;
+    font-weight: 100;
+    font-style: italic;
+  }
+  
+  .poppins-extralight-italic {
+    font-family: "Poppins", serif;
+    font-weight: 200;
+    font-style: italic;
+  }
+  
+  .poppins-light-italic {
+    font-family: "Poppins", serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .poppins-regular-italic {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .poppins-medium-italic {
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  .poppins-semibold-italic {
+    font-family: "Poppins", serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+  
+  .poppins-bold-italic {
+    font-family: "Poppins", serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .poppins-extrabold-italic {
+    font-family: "Poppins", serif;
+    font-weight: 800;
+    font-style: italic;
+  }
+  
+  .poppins-black-italic {
+    font-family: "Poppins", serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+
+  * {
+    font-family: 'Poppins';
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 2.4rem;
+  }
+  --------------------------------------------------------------------------------
+
+File: ./src\app\app-routing.module.ts
+--------------------------------------------------------------------------------
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './com/home/home.component';
+import { NotFoundComponent } from './com/not-found/not-found.component';
+import { OrganizationsComponent } from './com/organizations/organizations.component';
+import { ProjectsComponent } from './com/projects/projects.component';
+import { OrganizationDetailsComponent } from './com/organization-details/organization-details.component';
+import { ProjectDetailsComponent } from './com/project-details/project-details.component';
+import { SigninComponent } from './com/signin/signin.component';
+
+const routes: Routes = [
+  {path:'home', component: HomeComponent},
+  {path:'organizations', component: OrganizationsComponent
+  //   , children: [
+  //   {path:':id', component: OrganizationDetailsComponent},
+  // ]
+  },
+  // temporal:
+  {path:'organizationsexample', component: OrganizationDetailsComponent},
+  {path:'projects', component: ProjectsComponent
+  //   , children: [
+  //   {path:':id', component: ProjectDetailsComponent},
+  // ]
+  },
+  // temporal:
+  {path:'projectsexample', component: ProjectDetailsComponent},
+  {path: 'signin', component:SigninComponent},
+  {path: 'not-found', component:NotFoundComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: '**', redirectTo: 'not-found'}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+--------------------------------------------------------------------------------
+
+File: ./src\app\app.component.css
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+File: ./src\app\app.component.html
+--------------------------------------------------------------------------------
+<app-navbar></app-navbar>
+
+<div class="my-3">
+  <router-outlet></router-outlet>
+</div>--------------------------------------------------------------------------------
+
+File: ./src\app\app.component.spec.ts
+--------------------------------------------------------------------------------
+import { TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+
+describe('AppComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        RouterModule.forRoot([])
+      ],
+      declarations: [
+        AppComponent
+      ],
+    }).compileComponents();
+  });
+
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it(`should have as title 'app-front'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('app-front');
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, app-front');
+  });
+});
+--------------------------------------------------------------------------------
+
+File: ./src\app\app.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'app-front';
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\app.module.ts
+--------------------------------------------------------------------------------
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './com/home/home.component';
+import { NotFoundComponent } from './com/not-found/not-found.component';
+import { NavbarComponent } from './com/navbar/navbar.component';
+import { OrganizationsComponent } from './com/organizations/organizations.component';
+import { ProjectsComponent } from './com/projects/projects.component';
+import { OrganizationDetailsComponent } from './com/organization-details/organization-details.component';
+import { ProjectDetailsComponent } from './com/project-details/project-details.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { SigninComponent } from './com/signin/signin.component';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NotFoundComponent,
+    NavbarComponent,
+    OrganizationsComponent,
+    ProjectsComponent,
+    OrganizationDetailsComponent,
+    ProjectDetailsComponent,
+    SigninComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\home\home.component.css
+--------------------------------------------------------------------------------
+.hero-section {
+    width: 100%;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    max-width: none;
+    background-image: url('../../../../public/hero.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+  }
+
+  .services .card-body i {
+    font-size: 50px;
+  }
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\home\home.component.html
+--------------------------------------------------------------------------------
+<!-- Hero Section -->
+<section class="hero-section text-center py-5 text-white">
+  <div>
+    <h1 class="m-5">Bienvenido a Redes que Cambian</h1>
+      <div>
+        <p>Conoce y apoya a diversas organizaciones sociales en México</p>
+        <a class="btn btn-lg btn-outline-light me-2" href="organizations">Explorar Organizaciones</a>
+        <a class="btn btn-lg btn-outline-light" href="projects">Explorar Proyectos</a>
+      </div>
+  </div>  
+</section>
+
+<!-- Causas Section -->
+<section class="services section-padding my-5" id="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header text-center pb-5">
+          <h2>Causas que se están apoyando</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur<br>
+          adipisicing elit. Non, quo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-4">
+        <div class="card text-white text-center bg-dark pb-2">
+          <div class="card-body">
+            <i class="fa-solid fa-book my-2"></i>
+            <h3 class="card-title my-3">Best Quality</h3>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p><button class="btn bg-warning text-dark">Read More</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-4">
+        <div class="card text-white text-center bg-dark pb-2">
+          <div class="card-body">
+            <i class="fa-solid fa-handshake-angle my-2"></i>
+            <h3 class="card-title my-3">Sustainability</h3>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p><button class="btn bg-warning text-dark">Read More</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-4">
+        <div class="card text-white text-center bg-dark pb-2">
+          <div class="card-body">
+            <i class="fa-solid fa-house my-2"></i>
+            <h3 class="card-title my-3">Integrity</h3>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p><button class="btn bg-warning text-dark">Read More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- services section Ends -->
+  <!-- Causas Section -->
+  <!-- <section class="causes-section container my-5">
+    <h2 class="text-center mb-4">Causas que se están apoyando</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 animate__animated animate__fadeInDown">
+          <img src="orgEX.jpg" class="card-img-top" alt="imagenEjemplo">
+          <div class="card-body">
+            <h5 class="card-title">Titulo ejemplo</h5>
+            <p class="card-text">Descripcion ejemplo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   -->
+  <!-- Testimonios Carousel
+  <section class="testimonials-section bg-light py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Testimonios</h2>
+      <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" >
+            <div class="text-center">
+              <p>"ejemplo testimonial"</p>
+              <h5>- autor testimonial</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   -->--------------------------------------------------------------------------------
+
+File: ./src\app\com\home\home.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HomeComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\navbar\navbar.component.css
+--------------------------------------------------------------------------------
+.navbar-brand img{ height: 50px;}--------------------------------------------------------------------------------
+
+File: ./src\app\com\navbar\navbar.component.html
+--------------------------------------------------------------------------------
+<nav class="navbar navbar-expand-lg bg-light-subtle">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="Designer.png"></a>
+      <a class="navbar-brand" href="#">Redes que Cambian</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="home">Inicio</a>
+        <a class="nav-link" href="organizations">Organizaciones</a>
+        <a class="nav-link" href="projects">Proyectos</a> 
+      </div>
+      <button class="btn btn-outline-success">Iniciar Sesión</button>         
+    </div>
+  </div>
+</nav>
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\navbar\navbar.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
+})
+export class NavbarComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\not-found\not-found.component.css
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\not-found\not-found.component.html
+--------------------------------------------------------------------------------
+<div class="container">
+    <div class="row">
+        <div class="col alert alert-danger">
+            <h1>404 not found</h1>
+        </div>
+    </div>
+</div>--------------------------------------------------------------------------------
+
+File: ./src\app\com\not-found\not-found.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-not-found',
+  templateUrl: './not-found.component.html',
+  styleUrl: './not-found.component.css'
+})
+export class NotFoundComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\organization-details\organization-details.component.css
+--------------------------------------------------------------------------------
+* {
+	transition: all .5s ease-out;
+}
+body {
+	background: linear-gradient(to right, #d19f48 50%, #fff 50%);
+}
+.card {
+	width: 22rem;
+	background-color: #000;
+	color: #fff;
+	border-radius: 20px;
+	box-shadow: 0 1px 1px rgba(72, 78, 85, .6);
+}
+.card img {
+	border-radius: 20px 20px 0 0;
+}
+.card:hover {
+	background-color: #fff;
+	color: #000;
+	box-shadow: 0 20px 40px rgba(72, 78, 85, .6);
+	transform: translateY(-15px);
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\organization-details\organization-details.component.html
+--------------------------------------------------------------------------------
+<div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 my-5">
+                <h1 class="text-center">Organización</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="orgEX.jpg" class="img-fluid" alt="imagenEjemplo">
+            </div>
+            <div class="col-md-6">
+                <!-- <h2>Nombre de la organización</h2> -->
+                <p>Descripción de la organización</p>
+                <p>Ubicación: Ciudad, Estado</p>
+                <p>Correo:</p>
+                <p>Teléfono:</p>
+                <p>Redes sociales:</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-5">
+                <h2 class="text-center">Proyectos</h2>
+                            
+            </div>
+            <!-- mini gallery of proyects -->
+                        <!-- <div class="col-md-4 mb-4" >
+                            <div class="card">
+                                <img src="orgEX.jpg" class="card-img-top" alt="Project Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre proyecto</h5>
+                                    <p class="card-text">descripción proyecto</p>
+                                    <a class="btn btn-primary">Ver Proyecto</a>
+                                </div>
+                            </div>
+                        </div>
+             -->
+             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="card mx-auto my-5">
+                            <img src="orgEX.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Client Name</h5>
+                  <hr>
+                  <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam non facilis, sit reiciendis aspernatur veniam! Eligendi optio architecto, est similique ad sed? Eius ducimus eos perferendis possimus sint. Sequi, blanditiis!</p><!-- lorem30 -->
+                  <a href="projectsexample" class="btn btn-dark">Learn More</a>
+                </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="card mx-auto my-5">
+                            <img src="orgEX.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Client Name</h5>
+                  <hr>
+                  <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam non facilis, sit reiciendis aspernatur veniam! Eligendi optio architecto, est similique ad sed? Eius ducimus eos perferendis possimus sint. Sequi, blanditiis!</p>
+                  <a href="#" class="btn btn-dark">Learn More</a>
+                </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="card mx-auto my-5">
+                            <img src="orgEX.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Client Name</h5>
+                  <hr>
+                  <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam non facilis, sit reiciendis aspernatur veniam! Eligendi optio architecto, est similique ad sed? Eius ducimus eos perferendis possimus sint. Sequi, blanditiis!</p>
+                  <a href="#" class="btn btn-dark">Learn More</a>
+                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>--------------------------------------------------------------------------------
+
+File: ./src\app\com\organization-details\organization-details.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-organization-details',
+  templateUrl: './organization-details.component.html',
+  styleUrl: './organization-details.component.css'
+})
+export class OrganizationDetailsComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\project-details\project-details.component.css
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\project-details\project-details.component.html
+--------------------------------------------------------------------------------
+<div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 my-5">
+                <h1 class="text-center">Proyecto x</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="orgEX.jpg" class="img-fluid" alt="imagenEjemplo">
+            </div>
+            <div class="col-md-6">
+                <h3>Nombre de la organización</h3>
+                <p>objetivo</p>
+                <p>Descripción de proyecto</p>
+                <p>como participar:</p>
+                
+            </div>
+        </div>
+
+    </div>
+</div>--------------------------------------------------------------------------------
+
+File: ./src\app\com\project-details\project-details.component.spec.ts
+--------------------------------------------------------------------------------
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ProjectDetailsComponent } from './project-details.component';
+
+describe('ProjectDetailsComponent', () => {
+  let component: ProjectDetailsComponent;
+  let fixture: ComponentFixture<ProjectDetailsComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ProjectDetailsComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(ProjectDetailsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\project-details\project-details.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-project-details',
+  templateUrl: './project-details.component.html',
+  styleUrl: './project-details.component.css'
+})
+export class ProjectDetailsComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\projects\projects.component.css
+--------------------------------------------------------------------------------
+.box {
+	border-radius: 10px;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+    background-color: #2b4352;
+    color:#fff;
+    height: 25rem;
+}
+.box img{
+    width: 100%;
+    /* border-radius: 10px; */
+    display: block;
+    transition: transform 0.5s;
+    height: 80%;
+    object-fit: cover;
+}
+
+
+.overlay {
+	width: 100%;
+	height: 0;
+	background: linear-gradient(transparent,#1c1c1c 58%);
+	border-radius: 10px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 40px;
+	text-align: center;
+	font-size: 14px;
+	transition: height 0.5s;
+}
+
+/* .overlay a {
+	margin-top: 10px;
+	color: #262626;
+	text-decoration: none;
+	font-size: 14px;
+	background: #fff;
+	border-radius: 50px;
+	text-align: center;
+	padding: 5px 15px;
+}  */
+.box:hover img{
+    transform: scale(1.1);
+}
+.box:hover .overlay{
+    height: 100%;
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\projects\projects.component.html
+--------------------------------------------------------------------------------
+<section class="container my-5">
+    <h2 class="text-center mb-4">Proyectos</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" >
+        <!-- <div class="card h-100">
+          <img src="orgEX.jpg" class="card-img-top" alt="nombreimgej">
+          <div class="card-body">
+            <h5 class="card-title">ejemplo titulo proyecto</h5>
+            <p class="card-text">ejemplo descprición proyecto</p> -->
+            <!-- <a [routerLink]="['/projects', project.id]" class="btn btn-primary">Ver más</a> -->
+          <!-- </div>
+        </div> -->
+        
+          <div class="box text-center">
+            <img alt="" src="orgEX.jpg">
+            <h3 class="m-3">Ejemplo titulo proyecto</h3>
+            <div class="overlay">
+              <h3>Ejemplo titulo proyecto</h3>
+              <h4>Organización</h4>
+              <p>Descripción proyecto</p>
+              <a class="btn btn-light" href="projectsexample">Más información</a>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  </section>
+  --------------------------------------------------------------------------------
+
+File: ./src\app\com\projects\projects.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-projects',
+  templateUrl: './projects.component.html',
+  styleUrl: './projects.component.css'
+})
+export class ProjectsComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\signin\signin.component.css
+--------------------------------------------------------------------------------
+body {
+	background: #1574c3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 95vh;
+	font-family: montserrat;
+}
+/* Form Container */
+
+#wrapper {
+	width: 500px;
+	height: 370px;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.4);
+}
+#wrapper h1 {
+	color: #1574c3;
+}
+/* Form */
+
+.form {
+	width: 500px;
+	height: 370px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: transform 0.6s ease-in-out;
+	text-align: center;
+}
+.form input {
+	width: 80%;
+	height: 35px;
+	margin-bottom: 15px;
+	padding: 0 0 0 15px;
+}
+/* Login Form */
+
+#login-side {
+	background-color: #f7f7f7;
+	transform: translateX(0);
+}
+/* Sign Up Form */
+
+#signup-side {
+	background-color: #ffffff;
+	transform: translateX(-100%);
+}
+/* Form Switch */
+
+.switch-animation {
+	margin-top: 20px;
+	text-align: center;
+}
+.switch-animation a {
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.2s;
+}
+.switch-animation a:hover {
+	color: #6ab5b9;
+}
+button {
+	display: block;
+	margin: 2% auto 0;
+	border: none;
+	background: #1574c3;
+	padding: 10px 175px;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 18px;
+	border-radius: 5px;
+	font-family: montserrat;
+	font-weight: 700;
+}
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\signin\signin.component.html
+--------------------------------------------------------------------------------
+<!-- <div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header text-center pb-5">
+                    <h2>Sign In</h2>
+                    <p>Sign in to your account</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+-->
+
+<div id="wrapper">
+    <!-- Login Form -->
+    <form id="login-side" class="form">
+      <h1>Login Form</h1>
+      <input type="text" placeholder="Your Username...">
+      <input type="password" placeholder="Your Password...">
+      <button type="submit">Submit</button>
+      <p class="switch-animation">Don't have an account? <a href="#">Sign up</a></p>
+    </form>
+    <!-- Sign Up Form -->
+    <form id="signup-side" class="form">
+      <h1>Signup Form</h1>
+      <input type="text" placeholder="Enter Username...">
+      <input type="email" placeholder="Enter Email...">
+      <input type="password" placeholder="Enter Password">
+      <button type="submit">Submit</button>
+      <p class="switch-animation">Already have an account? <a href="#">Login</a></p>
+    </form>
+</div>
+--------------------------------------------------------------------------------
+
+File: ./src\app\com\signin\signin.component.ts
+--------------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrl: './signin.component.css'
+})
+export class SigninComponent {
+
+}
+--------------------------------------------------------------------------------
+
+File: ./src\environments\environment.ts
+--------------------------------------------------------------------------------
+export const environment = {
+    production: false,
+    apiUrl: 'http://localhost:8000'
+  };
+  --------------------------------------------------------------------------------
+

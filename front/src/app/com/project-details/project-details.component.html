@@ -1,0 +1,29 @@
+<!-- src/app/com/project-details/project-details.component.html -->
+<div *ngIf="project">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 my-5">
+          <h1 class="text-center">{{ project.name }}</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <img
+            [src]="project.images.length > 0 ? project.images[0].image : 'orgEX.jpg'"
+            class="img-fluid"
+            alt="{{ project.name }}"
+          />
+        </div>
+        <div class="col-md-6">
+          <h3>{{ project.organization.name }}</h3>
+          <p><strong>Objetivos:</strong> {{ project.objectives || 'N/A' }}</p>
+          <p><strong>Descripción:</strong> {{ project.description || 'N/A' }}</p>
+          <p>
+            <strong>Cómo participar:</strong>
+            {{ project.participation_methods || 'N/A' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

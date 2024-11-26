@@ -128,8 +128,6 @@ class Command(BaseCommand):
             if not org:
                 continue  # Saltar registros que no se pudieron parsear
             try:
-                self.stdout.write(f'Importando organización: {org}')
-
                 id_org = int(org[0])
                 nombre_org = org[1].strip()
                 id_sector = int(org[2])
