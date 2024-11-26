@@ -1,0 +1,24 @@
+<!-- src/app/com/organizations/organizations.component.html -->
+<section class="container my-5">
+  <h2 class="text-center mb-4">Organizaciones</h2>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let organization of organizations">
+      <div class="box text-center">
+        <img
+          alt="{{ organization.name }}"
+          [src]="organization.logo || 'orgEX.jpg'"
+        />
+        <h3 class="m-3">{{ organization.name }}</h3>
+        <div class="overlay">
+          <h3>{{ organization.name }}</h3>
+          <p>{{ organization.description || 'Sin descripción' }}</p>
+          <a
+            class="btn btn-light"
+            [routerLink]="['/organizations', organization.id]"
+            >Más información</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

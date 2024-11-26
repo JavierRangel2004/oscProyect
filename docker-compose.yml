@@ -11,7 +11,10 @@ services:
       - "5432:5432"
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -24,6 +27,20 @@ services:
       - DATABASE_PASSWORD=osc_password
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/usr/src/app
+      - /usr/src/app/node_modules
+
+    ports:
+      - "4200:4200"
+    depends_on:
+      - web
+    command: npm start
 
 volumes:
   postgres_data:
