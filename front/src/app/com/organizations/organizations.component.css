@@ -3,24 +3,33 @@
 	position: relative;
 	overflow: hidden;
 	box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
-    background-color: #2b4352;
-    color:#fff;
-    height: 25rem;
-}
-.box img{
-    width: 100%;
-    /* border-radius: 10px; */
-    display: block;
-    transition: transform 0.5s;
-    height: 80%;
-    object-fit: cover;
+	background-color: #2b4352;
+	color: #fff;
+	height: 20rem;
 }
 
+.box h3 {
+	font-size: 1.5rem;
+	margin: 0;
+	padding: 10px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	hyphens: auto;
+}
+
+.box img {
+	width: 100%;
+	/* border-radius: 10px; */
+	display: block;
+	transition: transform 0.5s;
+	height: 65%;
+	object-fit: cover;
+}
 
 .overlay {
 	width: 100%;
 	height: 0;
-	background: linear-gradient(transparent,#1c1c1c 58%);
+	background: linear-gradient(transparent,#2b4352 30%);
 	border-radius: 10px;
 	position: absolute;
 	left: 0;
@@ -30,25 +39,21 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 0 40px;
-	text-align: center;
-	font-size: 14px;
+	padding: 0 30px;
 	transition: height 0.5s;
 }
 
-/* .overlay a {
-	margin-top: 10px;
-	color: #262626;
-	text-decoration: none;
-	font-size: 14px;
-	background: #fff;
-	border-radius: 50px;
-	text-align: center;
-	padding: 5px 15px;
-}  */
-.box:hover img{
-    transform: scale(1.1);
+.overlay p {
+	text-align: justify;
+	font-size: 15px;
+	line-height: 1.5;
+	transition: height 0.5s;
 }
-.box:hover .overlay{
-    height: 100%;
+
+.box:hover img {
+	transform: scale(1.1);
+}
+
+.box:hover .overlay {
+	height: 100%;
 }
