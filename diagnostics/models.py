@@ -34,4 +34,4 @@ class DiagnosticResult(models.Model):
     results = models.JSONField()
 
     def __str__(self):
-        return f"{self.organization.name} - {self.diagnostic.name} - {self.score}"
+        return f"Result for {self.organization.name} on {self.diagnostic.name}"

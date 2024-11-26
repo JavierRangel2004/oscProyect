@@ -1,21 +1,54 @@
-# forum/admin.py
+# forum/models.py
 
-from django.contrib import admin
-from .models import Forum, Post, Comment
+from django.db import models
+from users.models import User
 
-@admin.register(Forum)
-class ForumAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created_by', 'created_at')
-    search_fields = ('name', 'description', 'created_by__username')
+class Forum(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='forums_created'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'forum', 'created_by', 'is_active', 'created_at')
-    list_filter = ('is_active', 'created_at')
-    search_fields = ('title', 'content', 'forum__name', 'created_by__username')
+    def __str__(self):
+        return self.name
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ('post', 'created_by', 'is_active', 'created_at')
-    list_filter = ('is_active', 'created_at')
-    search_fields = ('content', 'post__title', 'created_by__username')
+class Post(models.Model):
+    forum = models.ForeignKey(
+        Forum,
+        on_delete=models.CASCADE,
+        related_name='posts'
+    )
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='posts_created'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    content = models.TextField()
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments_created'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Comment by {self.created_by.username} on {self.post.title}"
