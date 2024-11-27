@@ -31,17 +31,17 @@ def scan_directory(root_dir, dir_blacklist=None, file_blacklist=None, output_fil
                     with open(file_path, 'r', encoding='utf-8') as file:
                         # Write and print file information
                         out_file.write(f"File: {file_path}\n")
-                        out_file.write("-" * 80 + "\n")
+                        out_file.write("-" * 8 + "\n")
                         print(f"File: {file_path}")
-                        print("-" * 80)
+                        print("-" * 8)
                         
                         # Read and save the complete file content
                         for line in file:
                             out_file.write(line)
                             print(line.rstrip())
                         
-                        out_file.write("-" * 80 + "\n\n")
-                        print("-" * 80 + "\n")
+                        out_file.write("-" * 8 + "\n\n")
+                        print("-" * 8 + "\n")
                 except Exception as e:
                     error_message = f"Error reading {file_path}: {e}\n"
                     out_file.write(error_message)
@@ -50,8 +50,8 @@ def scan_directory(root_dir, dir_blacklist=None, file_blacklist=None, output_fil
 if __name__ == "__main__":
     # Specify the root directory, directory blacklist, and file blacklist
     root_directory = "./"  # Change to the desired root directory
-    directories_to_ignore = ["__pycache__", ".git", "node_modules","migrations","data_import","cache","data_export","media","forum","resources","diagnostics"]  # Add directory names to ignore
-    files_to_ignore = ["README.md", "LICENSE","output.txt",".env",".gitignore","package-lock.json","fileOutput.py","__init__.py"]  # Add file names to ignore
+    directories_to_ignore = ["__pycache__", "osc_project",".git", "node_modules","migrations","data_import","cache","data_export","media","front","resources","diagnostics"]  # Add directory names to ignore
+    files_to_ignore = ["README.md", "LICENSE","output.txt",".env",".gitignore","package-lock.json","fileOutput.py","__init__.py","styles.css"]  # Add file names to ignore
 
     # Specify the output file
     output_file_path = "output.txt"

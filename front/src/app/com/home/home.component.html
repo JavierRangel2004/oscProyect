@@ -1,4 +1,4 @@
-<!-- src/app/com/home/home.component.html -->
+<!-- front/src/app/com/home/home.component.html -->
 
 <!-- Hero Section -->
 <section class="hero-section text-center py-5 text-white">
@@ -6,8 +6,8 @@
     <h1 class="m-5">Bienvenido a Redes que Cambian</h1>
     <div>
       <p>Conoce y apoya a diversas organizaciones sociales en México</p>
-      <a class="btn btn-lg btn-outline-light me-2" href="organizations">Explorar Organizaciones</a>
-      <a class="btn btn-lg btn-outline-light" href="projects">Explorar Proyectos</a>
+      <a class="btn btn-lg btn-outline-light me-2" routerLink="/organizations">Explorar Organizaciones</a>
+      <a class="btn btn-lg btn-outline-light" routerLink="/projects">Explorar Proyectos</a>
     </div>
   </div>
 </section>
@@ -31,7 +31,7 @@
         class="col-12 col-md-12 col-lg-4"
         *ngFor="let category of categories"
       >
-        <div class="card text-white text-center pb-2">
+        <div class="card text-white text-center pb-2" (click)="onCategoryClick(category.id)" style="cursor: pointer;">
           <div class="card-body">
             <!-- Adjust the icon based on the category if needed -->
             <i class="fa-solid fa-hand-holding-hand"></i>

@@ -1,6 +1,7 @@
-// src/app/services/organization.service.ts
+// front/src/app/services/organization.service.ts
+
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Organization } from '../models/organization';
@@ -16,8 +17,12 @@ export class OrganizationService {
 
   constructor(private http: HttpClient) {}
 
-  getOrganizations(): Observable<Organization[]> {
-    return this.http.get<Organization[]>(this.apiUrl);
+  getOrganizations(categoryId?: number): Observable<Organization[]> {
+    let params = new HttpParams();
+    if (categoryId) {
+      params = params.append('category', categoryId.toString());
+    }
+    return this.http.get<Organization[]>(this.apiUrl, { params: params });
   }
 
   getOrganization(id: number): Observable<Organization> {

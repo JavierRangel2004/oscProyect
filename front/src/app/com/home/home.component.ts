@@ -1,9 +1,11 @@
-// src/app/com/home/home.component.ts
+// front/src/app/com/home/home.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { OrganizationService } from '../../services/organization.service';
 import { OrganizationRequestService } from '../../services/organization-request.service';
 import { OrganizationRequest } from '../../models/organization-request';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +30,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationService,
-    private organizationRequestService: OrganizationRequestService
+    private organizationRequestService: OrganizationRequestService,
+    private router: Router  // Inyectado Router para navegación
   ) {}
 
   ngOnInit(): void {
@@ -70,5 +73,10 @@ export class HomeComponent implements OnInit {
     if (event.target.files.length > 0) {
       this.organizationRequest.logo = event.target.files[0];
     }
+  }
+
+  // Método para manejar clic en categoría
+  onCategoryClick(categoryId: number) {
+    this.router.navigate(['/organizations'], { queryParams: { category: categoryId } });
   }
 }

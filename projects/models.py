@@ -9,8 +9,6 @@ class Image(models.Model):
     def __str__(self):
         return self.image.name
 
-# projects/models.py
-
 class Project(models.Model):
     organization = models.ForeignKey(
         Organization,

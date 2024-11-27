@@ -1,6 +1,7 @@
-// src/app/services/project.service.ts
+// front/src/app/services/project.service.ts
+
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Project } from '../models/project';
@@ -27,4 +28,14 @@ export class ProjectService {
     return this.http.get<Project[]>(`${this.apiUrl}?organization=${organizationId}`);
   }
 
+  getProjectsFiltered(categoryId?: number, organizationId?: number): Observable<Project[]> {
+    let params = new HttpParams();
+    if (categoryId) {
+      params = params.append('category', categoryId.toString());
+    }
+    if (organizationId) {
+      params = params.append('organization', organizationId.toString());
+    }
+    return this.http.get<Project[]>(this.apiUrl, { params: params });
+  }
 }
