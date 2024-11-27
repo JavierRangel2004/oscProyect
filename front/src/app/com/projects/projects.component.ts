@@ -6,7 +6,7 @@ import { Project } from '../../models/project';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css'],
+  styleUrl: './projects.component.css'
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];

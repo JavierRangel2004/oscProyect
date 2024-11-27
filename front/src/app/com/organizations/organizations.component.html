@@ -6,7 +6,7 @@
       <div class="box text-center">
         <img
           alt="{{ organization.name }}"
-          [src]="getLogoUrl(organization.logo)"
+          [src]="organization.logo || 'orgEX.jpg'"
         />
         <h3 class="m-3">{{ organization.name }}</h3>
         <div class="overlay">

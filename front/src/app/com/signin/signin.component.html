@@ -1,10 +1,25 @@
 <div class="d-flex mt-5 py-5">
-    <div id="wrapper" class="m-auto">
-        <form id="login-side" class="form mt-4">
-          <h1>Iniciar sesión</h1>
-          <input type="text" placeholder="Usuario">
-          <input type="password" placeholder="Contraseña">
-          <button class="btn btn-dark" type="submit">Log in</button>
-        </form>        
-    </div>    
+  <div id="wrapper" class="m-auto">
+    <form id="login-side" class="form mt-4" (ngSubmit)="onSubmit()">
+      <h1>Iniciar sesión</h1>
+      <input
+        type="text"
+        placeholder="Usuario"
+        [(ngModel)]="username"
+        name="username"
+        required
+      />
+      <input
+        type="password"
+        placeholder="Contraseña"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+      <button class="btn btn-dark" type="submit">Log in</button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,38 +1,42 @@
 <!-- src/app/com/organization-details/organization-details.component.html -->
 <div *ngIf="organization">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 my-5">
-          <h1 class="text-center">{{ organization.name }}</h1>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 my-5">
+        <h1 class="text-center">{{ organization.name }}</h1>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <img
-            [src]="organization.logo || 'orgEX.jpg'"
-            class="img-fluid"
-            alt="{{ organization.name }}"
-          />
-        </div>
-        <div class="col-md-6">
-          <p>{{ organization.description || 'Sin descripción' }}</p>
-          <p>Ubicación: {{ organization.address }}</p>
-          <p>Correo: {{ organization.email || 'No disponible' }}</p>
-          <p>Teléfono: {{ organization.phone_number || 'No disponible' }}</p>
-          <p>
-            Redes sociales:
-            <a
-              *ngIf="organization.social_media_1"
-              [href]="organization.social_media_1"
-              target="_blank"
-              >Social 1</a
-            >
-            <a
-              *ngIf="organization.social_media_2"
-              [href]="organization.social_media_2"
-              target="_blank"
-              >Social 2</a
-            >
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          [src]="organization.logo || 'orgEX.jpg'"
+          class="img-fluid"
+          alt="{{ organization.name }}"
+        />
+      </div>
+      <div class="col-md-6">
+        <p>{{ organization.description || 'Sin descripción' }}</p>
+        <p>Ubicación: {{ organization.address }}</p>
+        <p *ngIf="organization.email">Correo: {{ organization.email }}</p>
+        <p *ngIf="organization.phone_number">Teléfono: {{ organization.phone_number }}</p>
+        <p *ngIf="organization.website">
+          Sitio web:
+          <a [href]="organization.website" target="_blank">{{ organization.website }}</a>
+        </p>
+        <p *ngIf="organization.social_media_1 != 'None'">
+          Redes sociales:
+          <a
+            *ngIf="organization.social_media_1"
+            [href]="organization.social_media_1"
+            target="_blank"
+            >Link</a
+          >
+          <a
+            *ngIf="organization.social_media_2 != 'None'"
+            [href]="organization.social_media_2"
+            target="_blank"
+            > -- Link 2</a
+          >
           </p>
         </div>
       </div>
@@ -68,5 +72,5 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
   
