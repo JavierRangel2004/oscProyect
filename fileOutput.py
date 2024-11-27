@@ -50,7 +50,7 @@ def scan_directory(root_dir, dir_blacklist=None, file_blacklist=None, output_fil
 if __name__ == "__main__":
     # Specify the root directory, directory blacklist, and file blacklist
     root_directory = "./"  # Change to the desired root directory
-    directories_to_ignore = ["__pycache__", ".git", "node_modules","migrations","data_import","cache","data_export","media"]  # Add directory names to ignore
+    directories_to_ignore = ["__pycache__", ".git", "node_modules","migrations","data_import","cache","data_export","media","forum","resources","diagnostics"]  # Add directory names to ignore
     files_to_ignore = ["README.md", "LICENSE","output.txt",".env",".gitignore","package-lock.json","fileOutput.py","__init__.py"]  # Add file names to ignore
 
     # Specify the output file
