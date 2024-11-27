@@ -7,12 +7,14 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install netcat for the health check in entrypoint.sh
-RUN apt-get update && apt-get install -y netcat-openbsd
+# Instalar netcat y dos2unix
+RUN apt-get update && apt-get install -y netcat-openbsd dos2unix
 
+# Copiar todo el código
 COPY . /app/
 
-COPY entrypoint.sh /app/
+# Convertir line endings y establecer permisos
+RUN dos2unix /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8000
