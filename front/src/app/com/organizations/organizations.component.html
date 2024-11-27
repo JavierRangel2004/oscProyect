@@ -1,6 +1,28 @@
 <!-- src/app/com/organizations/organizations.component.html -->
 <section class="container my-5">
   <h2 class="text-center mb-4">Organizaciones</h2>
+  <div class = "row">
+    <div class="mb-3 d-flex align-items-center">
+      <label for="orgCategory" class="form-label me-3">Categoría</label>
+      <select
+        class="form-select"
+        id="orgCategory"
+      >
+        <option value="">Todas</option>
+        <option value="Salud">Salud</option>
+        <option value="Infancia">Infancia</option>
+        <option value="Apoyo social">Apoyo social</option>
+      </select>
+      <button class="btn btn-dark ms-3">Filtrar</button>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <h5>Filtros seleccionados:</h5>
+      <button class="btn btn-outline-dark m-2">Filtro seleccionado 1</button>
+      <button class="btn btn-outline-dark">Filtro seleccionado 2</button>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-4 mb-4" *ngFor="let organization of organizations">
       <div class="box text-center">
