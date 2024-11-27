@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Organization } from '../models/organization';
+import { Category } from '../models/category'; // Import Category interface
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,6 +12,7 @@ import { environment } from '../../environments/environment';
 })
 export class OrganizationService {
   private apiUrl = `${environment.apiUrl}/organizations/organizations/`;
+  private categoriesUrl = `${environment.apiUrl}/organizations/categories/`; // Added this line
 
   constructor(private http: HttpClient) {}
 
@@ -20,5 +22,9 @@ export class OrganizationService {
 
   getOrganization(id: number): Observable<Organization> {
     return this.http.get<Organization>(`${this.apiUrl}${id}/`);
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.categoriesUrl);
   }
 }

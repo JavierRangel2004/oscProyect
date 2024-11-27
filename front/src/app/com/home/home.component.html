@@ -1,13 +1,15 @@
+<!-- src/app/com/home/home.component.html -->
+
 <!-- Hero Section -->
 <section class="hero-section text-center py-5 text-white">
   <div>
     <h1 class="m-5">Bienvenido a Redes que Cambian</h1>
-      <div>
-        <p>Conoce y apoya a diversas organizaciones sociales en México</p>
-        <a class="btn btn-lg btn-outline-light me-2" href="organizations">Explorar Organizaciones</a>
-        <a class="btn btn-lg btn-outline-light" href="projects">Explorar Proyectos</a>
-      </div>
-  </div>  
+    <div>
+      <p>Conoce y apoya a diversas organizaciones sociales en México</p>
+      <a class="btn btn-lg btn-outline-light me-2" href="organizations">Explorar Organizaciones</a>
+      <a class="btn btn-lg btn-outline-light" href="projects">Explorar Proyectos</a>
+    </div>
+  </div>
 </section>
 
 <!-- Causas Section -->
@@ -17,38 +19,23 @@
       <div class="col-md-12">
         <div class="section-header text-center pb-5">
           <h2>Causas que se están apoyando</h2>
-          <p>Por el momento, recopilamos información de organizaciones que están ayudando a mejorar a México en las siguientes categorías: </p>
+          <p>
+            Por el momento, recopilamos información de organizaciones que están ayudando a mejorar a
+            México en las siguientes categorías:
+          </p>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-12 col-md-12 col-lg-4">
+      <div
+        class="col-12 col-md-12 col-lg-4"
+        *ngFor="let category of categories"
+      >
         <div class="card text-white text-center pb-2">
           <div class="card-body">
+            <!-- Adjust the icon based on the category if needed -->
             <i class="fa-solid fa-book my-2"></i>
-            <h3 class="card-title my-3">Best Quality</h3>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-12 col-lg-4">
-        <div class="card text-white text-center pb-2">
-          <div class="card-body">
-            <i class="fa-solid fa-handshake-angle my-2"></i>
-            <h3 class="card-title my-3">Sustainability</h3>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-12 col-lg-4">
-        <div class="card text-white text-center pb-2">
-          <div class="card-body">
-            <i class="fa-solid fa-house my-2"></i>
-            <h3 class="card-title my-3">Integrity</h3>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eligendi modi temporibus alias iste. Accusantium?</p>
-            
+            <h3 class="card-title my-3">{{ category.name }}</h3>
           </div>
         </div>
       </div>
@@ -69,45 +56,116 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <form>
+        <form (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label for="orgName" class="form-label">Nombre de la Organización</label>
-            <input type="text" class="form-control" id="orgName" required>
+            <input
+              type="text"
+              class="form-control"
+              id="orgName"
+              [(ngModel)]="organizationRequest.name"
+              name="name"
+              required
+            />
           </div>
           <div class="mb-3">
             <label for="orgDescription" class="form-label">Descripción</label>
-            <textarea class="form-control" id="orgDescription" rows="3" required></textarea>
+            <textarea
+              class="form-control"
+              id="orgDescription"
+              rows="3"
+              [(ngModel)]="organizationRequest.description"
+              name="description"
+              required
+            ></textarea>
           </div>
           <div class="mb-3">
             <label for="orgWebsite" class="form-label">Website</label>
-            <input type="url" class="form-control" id="orgWebsite">
+            <input
+              type="url"
+              class="form-control"
+              id="orgWebsite"
+              [(ngModel)]="organizationRequest.website"
+              name="website"
+            />
           </div>
           <div class="mb-3">
             <label for="orgLogo" class="form-label">Logo</label>
-            <input type="file" class="form-control" id="orgLogo" accept="image/*">
+            <input
+              type="file"
+              class="form-control"
+              id="orgLogo"
+              accept="image/*"
+              (change)="onFileChange($event)"
+            />
           </div>
           <div class="mb-3">
             <label for="orgAddress" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="orgAddress" required>
+            <input
+              type="text"
+              class="form-control"
+              id="orgAddress"
+              [(ngModel)]="organizationRequest.address"
+              name="address"
+              required
+            />
           </div>
           <div class="mb-3">
             <label for="orgCategory" class="form-label">Categoría</label>
-            <select class="form-select" id="orgCategory" required>
-              <option value="salud">Salud</option>
-              <option value="infancia">Infancia</option>
-              <option value="apoyo-social">Apoyo Social</option>
+            <select
+              class="form-select"
+              id="orgCategory"
+              [(ngModel)]="organizationRequest.categories"
+              name="categories"
+              multiple
+              required
+            >
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </option>
             </select>
           </div>
           <div class="mb-3">
             <label for="orgSocials" class="form-label">Redes Sociales</label>
-            <input type="text" class="form-control" id="orgSocials" placeholder="Ingrese su cuenta de Facebook, Twitter, Instagram, etc.">
+            <input
+              type="text"
+              class="form-control"
+              id="orgSocials"
+              [(ngModel)]="organizationRequest.social_media"
+              name="social_media"
+              placeholder="Ingrese sus cuentas de Facebook, Twitter, Instagram, etc."
+            />
           </div>
           <div class="mb-3">
             <label for="orgPhone" class="form-label">Número de Teléfono</label>
-            <input type="tel" class="form-control" id="orgPhone" required>
+            <input
+              type="tel"
+              class="form-control"
+              id="orgPhone"
+              [(ngModel)]="organizationRequest.phone_number"
+              name="phone_number"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="orgEmail" class="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              id="orgEmail"
+              [(ngModel)]="organizationRequest.email"
+              name="email"
+              required
+            />
           </div>
           <button type="submit" class="btn btn-dark">Enviar solicitud</button>
         </form>
+        <div *ngIf="successMessage" class="alert alert-success mt-3">
+          {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+          {{ errorMessage }}
+        </div>
       </div>
     </div>
   </div>

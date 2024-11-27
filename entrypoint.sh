@@ -1,43 +1,43 @@
 #!/bin/bash
 
-# Crear directorios de importación y exportación si no existen
+# Create necessary directories if they don't exist
 mkdir -p data_import
 mkdir -p data_export
+mkdir -p media/organization_requests
 
-# Esperar hasta que la base de datos esté disponible
-echo "Esperando a que PostgreSQL esté disponible..."
+# Wait until the database is available
+echo "Waiting for PostgreSQL to be available..."
 while ! nc -z $DATABASE_HOST $DATABASE_PORT; do
   sleep 0.1
 done
-echo "PostgreSQL está disponible"
+echo "PostgreSQL is available"
 
-# Aplicar migraciones
-echo "Aplicando migraciones..."
+# Apply migrations
+echo "Applying migrations..."
 python manage.py makemigrations
 python manage.py migrate
 
-# Crear superusuario si no existe
-echo "Creando superusuario..."
+# Create superuser if it doesn't exist
+echo "Creating superuser..."
 python manage.py createsu
 
-# Ejecutar el comando de importación de datos si existe un archivo JSON en data_import
+# Import data if JSON files exist in data_import
 if ls data_import/*.json 1> /dev/null 2>&1; then
-    echo "Importando datos desde archivos JSON en data_import..."
+    echo "Importing data from JSON files in data_import..."
     for file in data_import/*.json; do
-        echo "Importando datos desde $file..."
+        echo "Importing data from $file..."
         python manage.py loaddata "$file"
     done
 else
-    echo "No se encontraron archivos JSON en data_import, omitiendo importación."
+    echo "No JSON files found in data_import, skipping import."
 fi
 
-# Exportar datos a data_export/data-<timestamp>.json
+# Export data to data_export/data-<timestamp>.json
 timestamp=$(date +"%Y%m%d%H%M%S")
 export_file="data_export/data-${timestamp}.json"
-echo "Exportando datos a ${export_file}..."
+echo "Exporting data to ${export_file}..."
 python manage.py export_data ${export_file}
 
-# Iniciar el servidor de desarrollo
-echo "Iniciando el servidor de desarrollo..."
+# Start the development server
+echo "Starting the development server..."
 exec "$@"
-
